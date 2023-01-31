@@ -17,4 +17,4 @@ class Definition:
         return self.definition + ' (WR)'
     def __str__(self):
         """String representation"""
-        return f'{"":<5}{self.get_word():<15}|{self.get_part():^14}|{"":<10}|{self.get_definition():^40}|{"":^20}|'
+        return f'{"":<2}{self.get_word():<25}{"":<2}|{self.get_part():^20}|{"":<10}|{"":<3}{self.get_definition():<35}{"":<2}|{"":^20}|'
