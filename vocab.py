@@ -17,31 +17,39 @@ def take_input():
         else:
             break
 
-# populate input words array
-take_input()
+def main():
+    """Main functionality of app"""
+    # populate input words array
+    take_input()
 
-# specify which definition
-for word in input_words:
-    translation = wr.translate(word)['translations'][0]['entries']
-    definition = translation[0]
-    # select specific definition if more than one exists
-    if len(translation) > 1:
-        # header w/ info
-        print()
-        print(f'=== {word} options ===')
-        print(f'{"index":<8}{"part":<20}{"definition":<30}{"translations":<25}{"examples"}')
-        print('---------------------------------------------------------------------------')
-        # definitions w/ indexes
-        for index, entry in enumerate(translation):
-            translations = [to['meaning'] for to in entry['to_word']]
-            examples = entry['to_example']
-            print(f'{f"{index+1}:":<8}{entry["from_word"]["grammar"]:<20}{entry["context"]:<30}{str(translations):<25}{examples}')
-        definition = translation[int(input('Selection index: ')) - 1]
-    selected_definitions.append(Definition(definition))
+    # specify which definition
+    for word in input_words:
+        translation = wr.translate(word)['translations'][0]['entries']
+        definition = translation[0]
+        # select specific definition if more than one exists
+        if len(translation) > 1:
+            # header w/ info
+            print()
+            print(f'=== {word} options ===')
+            print(f'{"index":<8}{"part":<20}{"definition":<30}{"translations":<25}{"examples"}')
+            print('---------------------------------------------------------------------------')
+            # definitions w/ indexes
+            for index, entry in enumerate(translation):
+                translations = [to['meaning'] for to in entry['to_word']]
+                examples = entry['to_example']
+                print((f'{f"{index+1}:":<8}{entry["from_word"]["grammar"]:<20}'
+                       f'{entry["context"]:<30}{str(translations):<25}{examples}'))
+            definition = translation[int(input('Selection index: ')) - 1]
+        selected_definitions.append(Definition(definition))
 
-# print objects
-print()
-print(f'{"":<2}{"Palabra":<25}{"":<2}|{"Categoría":^20}|{"Fuente":^10}|{"Definición y diccionario":^40}|{"Contexto":^20}|')
-print('-----------------------------|--------------------|----------|----------------------------------------|--------------------|')
-for definition in selected_definitions:
-    print(definition)
+    # print objects
+    print()
+    print((f'{"":<2}{"Palabra":<25}{"":<2}|{"Categoría":^20}|{"Fuente":^10}'
+           f'|{"Definición y diccionario":^40}|{"Contexto":^20}|'))
+    print(('-----------------------------|--------------------|----------'
+           '|----------------------------------------|--------------------|'))
+    for definition in selected_definitions:
+        print(definition)
+
+if __name__ == "__main__":
+    main()
