@@ -1,10 +1,11 @@
 """Main file that takes input and returns output for Spanish vocab work."""
 from wrpy import WordReference
+from def_obj import Definition
 
 wr = WordReference('es', 'en')
 
 input_words = []
-selected_words = []
+selected_definitions = []
 
 def yes_no_bool(string: str) -> bool:
     """Interprets Y/N input into boolean"""
@@ -29,11 +30,18 @@ for word in input_words:
         # header w/ info
         print(f'=== {word} options ===')
         print(f'{"index":<8}{"definition":<30}{"translations":<25}{"examples"}')
-        print('---------------------------------------------------------------------')
+        print('---------------------------------------------------------------------------')
         # definitions w/ indexes
         for index, entry in enumerate(translation):
             translations = [to['meaning'] for to in entry['to_word']]
             examples = entry['to_example']
             print(f'{f"{index+1}:":<8}{entry["context"]:<30}{str(translations):<25}{examples}')
         definition = translation[int(input('Selection index: ')) - 1]
-    selected_words.append(definition)
+    selected_definitions.append(Definition(definition))
+
+# print objects
+print()
+print(f'{"":<5}{"Palabra":<15}|{"Categoría":^14}|{"Fuente":^10}|{"Definición y diccionario":^40}|{"Contexto":^20}|')
+print('--------------------|--------------|----------|----------------------------------------|--------------------|')
+for definition in selected_definitions:
+    print(definition)
